@@ -27,7 +27,7 @@ describe('Event List Details: ', function(){
             var header = element(by.binding('name'));
 
 
-            expect(header.getText()).toMatch('asdklamsd');
+            expect(header.getText()).toMatch('Prueba');
         });
 
         it ('Should update the url', function(){

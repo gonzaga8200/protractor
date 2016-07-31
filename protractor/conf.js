@@ -8,7 +8,9 @@ exports.config = {
     suites: {
       smoke: './smoke/*.spec.js',
       longRunning:'./ratings/a.bunch.of.long.test.spec.js',
-      full: './**/*.spec.js'
+      full: './**/*.spec.js',
+      create: './ratings/create.event.spec.js',
+      list: './smoke/event.list.item.spec.js'
     },
 
     //specs: ['./ratings/event.list.item.spec.js'],

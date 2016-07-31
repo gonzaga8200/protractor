@@ -1,15 +1,19 @@
 /**
  * Created by gonzalo on 29/07/16.
  */
+
+var CreatePage = require('./pages/create.event.page.js'),
+    ListPage = require('./pages/event.list.page.js');
 describe('Adding a new event', function(){
-    var button, css;
+    var button, css,
+        createPage = new CreatePage(),
+        listPage = new ListPage();
     beforeEach(function(){
         browser.get('http://localhost:3000/#!/EventRatings/new');
-        button = element(by.buttonText('Create'));
     })
     describe('When the form is empty', function(){
         it('should disable the create button', function(){
-            var css = button.getAttribute('class');
+            var css = createPage.getbuttonClasses();
             expect(css).toMatch('disabled');
         })
 
@@ -17,25 +21,31 @@ describe('Adding a new event', function(){
 
     describe('When specifying the name', function(){
         it('Should enable the Create Button', function(){
-           element(by.model('event.name')).sendKeys('A Sample Event');
+           createPage.setName('A Sample Event');
 
-            var css = button.getAttribute('class');
+            var css = createPage.getbuttonClasses();
             expect(css).not.toMatch('disabled');
 
         })
     });
 
+    describe('When the name is too short', function(){
+        it ('Should disabled Button', function(){
+            createPage.setName('ABC');
+            var css = createPage.getbuttonClasses();
+            expect(css).toMatch('disabled');
+        })
+    })
+
     describe('When saving the form', function(){
         it ('should add the event to the list', function(){
-            element(by.model('event.name')).sendKeys('Module 3');
+            createPage.name.sendKeys('Module 3');
 
-            button.click();
+            createPage.saveData();
 
             browser.waitForAngular();
 
-            var list = element.all(by.binding('name'));
-
-            expect(list.getText()).toMatch('Module 3');
+            expect(listPage.getNameTexts()).toMatch('Module 3');
         })
     })
 })
